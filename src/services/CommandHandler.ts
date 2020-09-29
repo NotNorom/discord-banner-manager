@@ -1,15 +1,10 @@
-import { fileURLToPath } from 'url';
 import fs from "fs";
-import path from "path";
 import Discord from "discord.js";
 import Command from "../models/Command";
 import config from "../config/config.js";
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
 
-
-export default class CommandHandler {
+export class CommandHandler {
     public commands: Discord.Collection<string, Command>;
     public prefixOverrides: Discord.Collection<Discord.Snowflake, string>;
 
@@ -36,7 +31,7 @@ export default class CommandHandler {
     
     public async LoadCommands(): Promise<Discord.Collection<string, Command>> {
         const {commandsFolder} = config;
-        const commandFiles = fs.readdirSync(path.resolve(__dirname, commandsFolder)).filter(file => file.endsWith(".js"));
+        const commandFiles = fs.readdirSync(commandsFolder).filter(file => file.endsWith(".js"));
         
         for (const file of commandFiles) {
             const command: Command = (await import(`../commands/${file}`)).default;
@@ -71,3 +66,5 @@ export default class CommandHandler {
         }
     }
 }
+
+export const commandHandler = new CommandHandler();

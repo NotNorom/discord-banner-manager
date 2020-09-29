@@ -1,5 +1,5 @@
 import {Message} from "discord.js";
-import CommandHandler from "../services/CommandHandler";
+import {CommandHandler} from "../services/CommandHandler";
 
 export default {
     name: "ping",
