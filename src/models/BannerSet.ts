@@ -1,21 +1,23 @@
-enum CycleMethod {
-    Static = 1,
-    Random,
-    Forward,
-    Reverse,
-}
+import Image from "./Image";
+
+type CycleMethod =
+    | "forward"
+    | "reverse"
+    | "static"
+    | "random-with-duplicates"
+    | "random-without-duplicates";
 
 export default class BannerSet {
-    images: [String];
+    name: string;
+    images: Image[];
+    activeImage: Image;
     cycleMethod: CycleMethod;
     cycleDuration: Number;
-    cycleStart: Date;
-    activeImage: Number;
 
-    constructor(imageURLs: [String], cycleMethod: CycleMethod, cycleDuration: Number, cycleStart: Date) {
-        this.images = imageURLs;
+    constructor(name: string, cycleMethod: CycleMethod, cycleDurationMinutes: Number) {
+        this.name = name;
+        this.images = [];
         this.cycleMethod = cycleMethod;
-        this.cycleDuration = cycleDuration;
-        this.cycleStart = cycleStart;
+        this.cycleDuration = cycleDurationMinutes;
     }
 }
